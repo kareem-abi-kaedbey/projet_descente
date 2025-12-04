@@ -2,11 +2,11 @@
 
 // ======= Q1 =======
 
-double Q1::f(const Vecteur& x) const{
+double Q1::evaluer(const Vecteur& x) const{
     return x[0] * x[0] + 2 * x[1] * x[1];
 }
 
-Vecteur Q1::grad_f(const Vecteur& x) const{
+Vecteur Q1::calculer_gradient(const Vecteur& x) const{
     Vecteur res(2);
     res[0] = 2 * x[0];
     res[1] = 4 * x[1];
@@ -15,11 +15,11 @@ Vecteur Q1::grad_f(const Vecteur& x) const{
 
 // ======= Q2 =======
 
-double Q2::f(const Vecteur& x) const{
+double Q2::evaluer(const Vecteur& x) const{
     return x[0] * x[0] + 2 * x[1] * x[1] + 3 * x[2] * x[2];
 }
 
-Vecteur Q2::grad_f(const Vecteur& x) const{
+Vecteur Q2::calculer_gradient(const Vecteur& x) const{
     Vecteur res(3);
     res[0] = 2 * x[0];
     res[1] = 4 * x[1];
@@ -29,11 +29,11 @@ Vecteur Q2::grad_f(const Vecteur& x) const{
 
 // ======= R =======
 
-double R::f(const Vecteur& x) const{
+double R::evaluer(const Vecteur& x) const{
     return (1 - x[0]) * (1 - x[0]) + 100 * (x[1] - x[0] * x[0]) * (x[1] - x[0] * x[0]);
 }
 
-Vecteur R::grad_f(const Vecteur& x) const{
+Vecteur R::calculer_gradient(const Vecteur& x) const{
     Vecteur res(2);
     res[0] = - 2 * (1 - x[0]) - 400 * x[0] * (x[1] - x[0] * x[0]);
     res[1] = 200 * (x[1] - x[0] * x[0]);
