@@ -1,8 +1,9 @@
 #include "../include/vecteur.hpp"
 #include "../include/fonctions.hpp"
 #include "../include/descente.hpp"
+#include "../include/affichage.hpp"
 #include <iostream>
-#include <iomanip>
+
 
 using namespace std;
 
@@ -17,25 +18,15 @@ int main() {
     x0[0] = 0.0;
     x0[1] = 0.0;
 
-    cout << "---" << endl;
-    cout << "--- Descente de Gradient (Pas Fixe)" << endl;
-    cout << "---" << endl;
-    cout << "Point initial : " << fixed << setprecision(2) << x0 << endl;
-    cout << "Fonction : (1-x1)^2 + 100*(x2-x1^2)^2 " << endl;
-    cout << "Methode : Descente Gradient" << endl;
-    cout << "Max-iters : " << maxIter << endl;
-    cout << "Iter. Obj. ||Grad|| Point" << endl;
+    ResultatDescente res = descente_gradient_pas_fixe(r, x0, alpha, eps, maxIter);
 
-    Vecteur sol = descente_gradient_pas_fixe(r, x0, alpha, eps, maxIter);
-
-    cout << "Solution :" << endl;
-    cout << "Statut : CONVERGENCE (Tolerance atteinte)" << endl;
-    cout << "Solution : " << fixed << setprecision(2) << sol << endl;
-    cout << "Valeur : " << fixed << setprecision(2) << r.f(sol) << endl;
+    afficher_resultat_descente(r, res,
+                               "Sorties-Rosenbrock",
+                               "(1 - x1)^2 + 100 * (x2 - x1^2)^2",
+                               "Descente Gradient");
 
     return 0;
 }
-
 // on remarque que cette fonction explose avant d'arriver 
 // meme a 10 iterations on obtient nan et inf (des valeurs
 // non representables par des doubles). 

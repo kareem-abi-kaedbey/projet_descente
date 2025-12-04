@@ -1,29 +1,25 @@
 #include "../include/descente.hpp"
 #include "../include/fonctions.hpp"
 #include <iostream>
-#include <iomanip>   
 
-using namespace std;
-
-
-Vecteur descente_gradient_pas_fixe(const IFonction& f,
-                                   const Vecteur& x0,
-                                   double alpha,
-                                   double eps,
-                                   int maxIter)
+ResultatDescente descente_gradient_pas_fixe(const IFonction& f,
+                                            const Vecteur& x0,
+                                            double alpha,
+                                            double eps,
+                                            int maxIter)
 {
+    ResultatDescente res;
+
     Vecteur x = x0;
     Vecteur g = f.grad_f(x);
     double norm_g = g.norm();
     int k = 0;
 
-    cout << k << " ";
-    cout << fixed << setprecision(5) << f.f(x) << " ";
-    cout << scientific << setprecision(2) << norm_g << " ";
-    cout << fixed << setprecision(2) << x << endl;
+    res.points.push_back(x);
+    res.valeurs.push_back(f.f(x));
+    res.normes_grad.push_back(norm_g);
 
     while (norm_g > eps && k < maxIter) {
-
         Vecteur d = g * (-1.0);
 
         x = x + d * alpha;
@@ -33,13 +29,13 @@ Vecteur descente_gradient_pas_fixe(const IFonction& f,
 
         ++k;
 
-        if (k % 10 == 0) {
-            cout << k << " ";
-            cout << fixed << setprecision(5) << f.f(x) << " ";
-            cout << scientific << setprecision(2) << norm_g << " ";
-            cout << fixed << setprecision(2) << x << endl;
-        }
+        res.points.push_back(x);
+        res.valeurs.push_back(f.f(x));
+        res.normes_grad.push_back(norm_g);
     }
 
-    return x;
+    res.nb_iters = k;
+    res.convergence = (norm_g <= eps);
+
+    return res;
 }
