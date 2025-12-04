@@ -1,21 +1,32 @@
+# Compilateur
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -I include
 
-# Cibles par défaut
-all: main
+# Options de compilation
+# -Iinc : indique où trouver les .h
+# -Wall -Wextra : active les avertissements
+CXXFLAGS = -Wall -Wextra -Iinc
 
-# Programme principal
-main: bin/main.exe
+# Liste des fichiers sources
+SRC = tests/test_fonctions.cpp src/fonctions.cpp src/vecteur.cpp
 
-bin/main.exe: src/main.cpp src/vecteur.cpp include/vecteur.hpp
-	$(CXX) $(CXXFLAGS) src/main.cpp src/vecteur.cpp -o bin/main.exe
 
-# Test pour la classe Vecteur
-test_vecteur: bin/test_vecteur.exe
+# Transformation des .cpp en .o (fichiers objets)
+OBJ = $(SRC:.cpp=.o)
 
-bin/test_vecteur.exe: tests/test_vecteur.cpp src/vecteur.cpp include/vecteur.hpp
-	$(CXX) $(CXXFLAGS) tests/test_vecteur.cpp src/vecteur.cpp -o bin/test_vecteur.exe
+# Nom de l'exécutable final
+EXEC = fonctions
 
-# Nettoyage des exécutables
+# Règle par défaut
+all: $(EXEC)
+
+# Édition de liens (création de l'exécutable)
+$(EXEC): $(OBJ)
+	$(CXX) $(OBJ) -o $(EXEC)
+
+# Compilation des fichiers sources en objets
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Nettoyage des fichiers générés
 clean:
-	rm -f bin/*.exe
+	rm -f $(OBJ) $(EXEC)

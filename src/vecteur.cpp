@@ -12,7 +12,7 @@ int Vecteur::size() const{
 }
 double Vecteur::norm() const{
     double s = 0.0;
-    for (int i = 0; i < coordonnees.size(); i++){
+    for (int i = 0; i < (int)coordonnees.size(); i++){
         s += coordonnees[i] * coordonnees[i];
     }
     return sqrt(s);
@@ -44,7 +44,7 @@ Vecteur Vecteur::operator-(const Vecteur& other) const{
 
 Vecteur Vecteur::operator*(double lambda) const{
     Vecteur mult(coordonnees.size());
-    for (int i = 0; i < coordonnees.size(); i++){
+    for (int i = 0; i < (int)coordonnees.size(); i++){
         mult[i] = coordonnees[i] * lambda;
     }
     return mult;

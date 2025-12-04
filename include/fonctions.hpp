@@ -7,7 +7,7 @@ class FonctionObjectif{
 public:
     virtual Vecteur calculer_gradient(const Vecteur& x) const = 0;
     virtual double evaluer(const Vecteur& x) const = 0;
-    virtual ~IFonction() = default;
+    virtual ~FonctionObjectif() = default;
 };
 
 class Q1 : public FonctionObjectif{
