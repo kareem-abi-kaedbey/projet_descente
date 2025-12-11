@@ -5,17 +5,21 @@
 #include"fonctions.hpp"
 #include<iostream>
 #include<iomanip>
+#include"pas_deplacement/PasFixe.hpp"
+
 
 template<size_t N>
 class Optimiseur{
 protected : 
     const FonctionObjective<N>& f;
-    double pas = 0.1;
+    PasFixe<N>& pas;
     double epsilon = 1e-6;
     int max_iter = 1000;
 
 public:
-    Optimiseur(const FonctionObjective<N>& f_obj) : f(f_obj){}
+    Optimiseur(const FonctionObjective<N>& f_obj,PasFixe<N>& pas1) : f(f_obj){
+        this->pas = pas1;
+    }
 
     virtual Vecteur<N> calculerDirection(const Vecteur<N>& x) const = 0;
 
@@ -34,7 +38,8 @@ public:
         std::cout << "Iter Obj ||Grad|| Point" << std::endl;
         while ((k < max_iter) and (norm_g > epsilon)){
             dirDescente = calculerDirection(x);
-            x = x + dirDescente * pas;
+
+            x = x + dirDescente * pas.calculerPas(x,-norm_g,g_f,f);
             g_f = f.calculerGradient(x);
             norm_g = g_f.norm();
             if (k%10 == 0){
